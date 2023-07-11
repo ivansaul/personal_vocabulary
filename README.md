@@ -71,3 +71,8 @@ Contributions are welcome.
 ## Facing any Issue?
 
 Feel free to open an Issue :)
+
+## IMPORTANT
+
+- [Design](https://dribbble.com/shots/14178683-Your-personal-vocabulary-App)
+- [sample](https://github.com/ivansaul/flutter_weather_app)
