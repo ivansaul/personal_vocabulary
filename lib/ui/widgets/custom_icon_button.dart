@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_template/config/theme/app_theme.dart';
 
 class CustomIconButton extends StatelessWidget {
-  final Icon icon;
+  final Widget icon;
   final Color color;
   final double size;
   final double borderRadius;
@@ -28,7 +28,7 @@ class CustomIconButton extends StatelessWidget {
           child: SizedBox(
             height: size,
             width: size,
-            child: icon,
+            child: Center(child: icon),
           ),
         ),
       ),

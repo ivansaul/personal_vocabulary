@@ -18,10 +18,20 @@ class AppTheme {
   static const Color primaryColorWhite = Colors.white;
 
   // Text Style
+  static TextStyle titleExtaLargeTextStyle = GoogleFonts.lexend(
+    color: AppTheme.primaryColorBlack,
+    fontWeight: FontWeight.bold,
+    fontSize: 26,
+  );
   static TextStyle titleLargeTextStyle = GoogleFonts.lexend(
     color: AppTheme.primaryColorBlack,
     fontWeight: FontWeight.bold,
     fontSize: 20,
+  );
+  static TextStyle subTitleLargeTextStyle = GoogleFonts.lexend(
+    color: AppTheme.primaryColorBlack.withOpacity(0.8),
+    fontWeight: FontWeight.normal,
+    fontSize: 18,
   );
   static TextStyle progressTextStyle = GoogleFonts.lexend(
     color: AppTheme.primaryColorBlack,
