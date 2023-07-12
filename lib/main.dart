@@ -54,6 +54,8 @@ class MyAppPreview extends StatelessWidget {
     return MaterialApp.router(
       // scrollBehavior: const MaterialScrollBehavior()
       //     .copyWith(dragDevices: {PointerDeviceKind.mouse}),
+      scrollBehavior: const MaterialScrollBehavior()
+          .copyWith(dragDevices: {PointerDeviceKind.mouse}),
       locale: DevicePreview.locale(context),
       builder: DevicePreview.appBuilder,
       debugShowCheckedModeBanner: false,
