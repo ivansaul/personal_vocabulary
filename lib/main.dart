@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       routerConfig: appRouter,
-      theme: AppTheme().getTheme(),
+      theme: AppTheme.getTheme(),
       title: 'Material App',
     );
   }
@@ -59,7 +59,7 @@ class MyAppPreview extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       routerConfig: appRouter,
       title: 'Material App',
-      theme: AppTheme().getTheme(),
+      theme: AppTheme.getTheme(),
     );
   }
 }
