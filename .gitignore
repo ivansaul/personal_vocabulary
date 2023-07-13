@@ -1,3 +1,6 @@
+# Custom
+*.json
+
 # Miscellaneous
 *.class
 *.log

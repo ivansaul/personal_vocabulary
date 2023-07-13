@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_template/config/theme/app_theme.dart';
+import 'package:flutter_template/ui/screens/test_screen.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../widgets/widgets.dart';
@@ -46,8 +47,6 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
-
-
 class _AppbarView extends StatelessWidget {
   const _AppbarView({
     super.key,
@@ -67,7 +66,14 @@ class _AppbarView extends StatelessWidget {
         const Spacer(),
         CustomIconButton(
           icon: const Icon(Icons.bookmark),
-          onTap: () {},
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const TestScree(),
+              ),
+            );
+          },
         ),
       ],
     );

@@ -1,15 +1,19 @@
+import 'package:isar/isar.dart';
+
+part "word.g.dart";
+
+@collection
 class Word {
-  final String id;
+  Id id = Isar.autoIncrement;
   final String name;
   final String level;
   final List<String> ipa;
   final List<String> sense;
   final String soundUS;
   final String soundGB;
-  final List<List<String>> examples;
+  final List<Example> examples;
 
   Word({
-    required this.id,
     required this.name,
     required this.level,
     required this.ipa,
@@ -18,4 +22,11 @@ class Word {
     required this.soundUS,
     required this.examples,
   });
+}
+
+@embedded
+class Example {
+  // List<String>? example;
+  String? en;
+  String? es;
 }
