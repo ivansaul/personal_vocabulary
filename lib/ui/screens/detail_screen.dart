@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_template/config/theme/app_theme.dart';
+import 'package:flutter_template/domain/entities/word.dart';
 import 'package:flutter_template/ui/widgets/widgets.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class DetailScreen extends StatelessWidget {
-  const DetailScreen({super.key});
+  final Word word;
+  const DetailScreen({super.key, required this.word});
 
   @override
   Widget build(BuildContext context) {
@@ -16,22 +19,7 @@ class DetailScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                children: [
-                  CustomIconButton(
-                    icon: const Icon(
-                      Icons.arrow_back_ios_new_rounded,
-                      size: 18,
-                    ),
-                    onTap: () {},
-                  ),
-                  const Spacer(),
-                  CustomIconButton(
-                    icon: const Icon(Icons.bookmark),
-                    onTap: () {},
-                  ),
-                ],
-              ),
+              const _AppbarView(),
               const SizedBox(height: 50),
               Text(
                 'Practice English',
@@ -57,11 +45,11 @@ class DetailScreen extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'pleasure',
+                                word.name,
                                 style: AppTheme.titleLargeTextStyle,
                               ),
                               Text(
-                                "[ˈpleʒər]",
+                                "[${word.ipa.first}]",
                                 style: GoogleFonts.lexend(
                                   color: AppTheme.primaryColorGray,
                                   fontSize: 13,
@@ -82,7 +70,7 @@ class DetailScreen extends StatelessWidget {
                       ),
                       const SizedBox(height: 15),
                       Text(
-                        'placer, gusto, voluntad',
+                        word.sense.join(', '),
                         style: GoogleFonts.lexend(
                           color: AppTheme.primaryColorBlack,
                           fontSize: 12,
@@ -113,25 +101,6 @@ class DetailScreen extends StatelessWidget {
                           fontSize: 12,
                         ),
                       ),
-                      Row(
-                        children: [
-                          CustomTextIconButton(
-                            text: 'Listen',
-                            onTap: () {},
-                          ),
-                          const Spacer(),
-                          CustomTextIconButton(
-                            color: Colors.red,
-                            colorText: Colors.yellow,
-                            icon: const Icon(
-                              Icons.favorite,
-                              color: Colors.white,
-                            ),
-                            text: 'View more',
-                            onTap: () {},
-                          ),
-                        ],
-                      )
                     ],
                   ),
                 ),
@@ -140,6 +109,32 @@ class DetailScreen extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class _AppbarView extends StatelessWidget {
+  const _AppbarView();
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        CustomIconButton(
+          icon: const Icon(
+            Icons.arrow_back_ios_new_rounded,
+            size: 18,
+          ),
+          onTap: () {
+            context.pop();
+          },
+        ),
+        const Spacer(),
+        CustomIconButton(
+          icon: const Icon(Icons.favorite_border_rounded),
+          onTap: () {},
+        ),
+      ],
     );
   }
 }

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:flutter/services.dart';
 import 'package:flutter_template/domain/repositories/localdb_repository.dart';
@@ -27,7 +28,7 @@ class LocaldbRepositoryImpl extends LocaldbRepository {
   Future<void> loadData() async {
     final Isar isar = await db;
 
-    const String path = 'assets/data/words.json';
+    const String path = 'assets/data/words_sample.json';
     final String response = await rootBundle.loadString(path);
     final List<dynamic> data = jsonDecode(response);
 
@@ -48,7 +49,7 @@ class LocaldbRepositoryImpl extends LocaldbRepository {
             .toList()
             .cast<Example>(),
       );
-      print(tmpWord.name);
+      // print(tmpWord.name);
       await isar.writeTxn(() async {
         await isar.words.put(tmpWord);
       });
@@ -58,8 +59,23 @@ class LocaldbRepositoryImpl extends LocaldbRepository {
   }
 
   @override
-  Future<Word> getRandomWord() {
-    // TODO: implement getRandomWord
-    throw UnimplementedError();
+  Future<List<Word>> getRandomWords({required int count}) async {
+    final Isar isar = await db;
+    final words = await isar.words.where().anyId().findAll();
+
+    // Generate a list of random indexes.
+    final indexes = List.generate(count, (index) => Random().nextInt(words.length));
+    // Use the random indexes to retrieve 5 random words from the list.
+    final randomWords = indexes.map((index) => words[index]).toList();
+
+    return randomWords;
+  }
+
+  @override
+  Future<List<Word>> searchWord({required String query}) async {
+    final Isar isar = await db;
+    // final words = await isar.words.filter().nameContains(query).findAll();
+    final words = await isar.words.filter().nameContains(query).sortByName().findAll();
+    return words;
   }
 }

@@ -13,7 +13,12 @@ class LocaldbUsecaseImpl extends LocaldbUsecase {
   }
 
   @override
-  Future<Word> getRandomWord() {
-    return localdbRepository.getRandomWord();
+  Future<List<Word>> getRandomWords({required int count}) {
+    return localdbRepository.getRandomWords(count: count);
+  }
+
+  @override
+  Future<List<Word>> searchWord({required String query}) {
+    return localdbRepository.searchWord(query: query);
   }
 }
