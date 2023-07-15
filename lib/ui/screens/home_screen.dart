@@ -5,6 +5,7 @@ import 'package:flutter_template/config/theme/app_theme.dart';
 import 'package:flutter_template/ui/delegates/search_word_delegate.dart';
 import 'package:flutter_template/ui/providers/localdb_provider.dart';
 import 'package:flutter_template/ui/providers/localdb_repository_provider.dart';
+import 'package:flutter_template/ui/screens/categories_screen.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../widgets/widgets.dart';
@@ -21,11 +22,14 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
   @override
   void initState() {
     super.initState();
+    // ref.read(loadDataProvider.notifier).loadData(name: 'words_sample');
     ref.read(randomWordsProvider.notifier).getRandomWords(count: 1);
   }
 
   @override
   Widget build(BuildContext context) {
+    final scaffoldKey = GlobalKey<ScaffoldState>();
+
     final words = ref.watch(randomWordsProvider);
     if (words.isEmpty) {
       return const Scaffold(
@@ -36,6 +40,7 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
     }
 
     return Scaffold(
+      key: scaffoldKey,
       backgroundColor: AppTheme.primaryColorLightGray,
       body: SafeArea(
         child: Padding(
@@ -44,8 +49,8 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // AppBar
-              const _AppbarView(),
-              const SizedBox(height: 50),
+              _AppbarView(scaffoldKey: scaffoldKey),
+              const SizedBox(height: 40),
               Text(
                 'Good evening, Saul!',
                 style: AppTheme.titleExtaLargeTextStyle,
@@ -57,7 +62,7 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
                 child: ListView(
                   scrollDirection: Axis.vertical,
                   children: [
-                    const SizedBox(height: 50),
+                    const SizedBox(height: 30),
                     Text(
                       'Practice English',
                       style: AppTheme.titleExtaLargeTextStyle,
@@ -73,12 +78,19 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
                     const SizedBox(height: 30),
 
                     // Review Cards
-                    const CustomListTile(
+                    CustomListTile(
                       iconColor: Colors.orange,
                       leading: Icons.edit_outlined,
                       trailing: Icons.keyboard_arrow_right_rounded,
                       title: '2 Selected categories',
                       subtitle: 'A1, C2',
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => const CategoriesScreen(),
+                          ),
+                        );
+                      },
                     ),
                     const SizedBox(height: 10),
                     const CustomListTile(
@@ -91,7 +103,7 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
                     const SizedBox(height: 10),
                     const CustomListTile(
                       iconColor: Colors.green,
-                      leading: Icons.refresh,
+                      leading: Icons.history_rounded,
                       trailing: Icons.keyboard_arrow_right_rounded,
                       title: 'Review words',
                       subtitle: 'Words to review: 2',
@@ -111,12 +123,17 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
           ),
         ),
       ),
+      drawer: const SideMenu(),
+      bottomNavigationBar: const CustomNavbar(),
     );
   }
 }
 
 class _AppbarView extends ConsumerWidget {
-  const _AppbarView();
+  final GlobalKey<ScaffoldState> scaffoldKey;
+  const _AppbarView({
+    required this.scaffoldKey,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -127,7 +144,9 @@ class _AppbarView extends ConsumerWidget {
             FontAwesomeIcons.barsProgress,
             size: 18,
           ),
-          onTap: () {},
+          onTap: () {
+            scaffoldKey.currentState?.openDrawer();
+          },
         ),
         const Spacer(),
         CustomIconButton(

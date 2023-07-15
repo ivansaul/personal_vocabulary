@@ -4,3 +4,6 @@ export 'custom_text_icon_button.dart';
 export 'word_card_widget.dart';
 export 'custom_list_tile.dart';
 export 'custom_appbar.dart';
+export 'side_menu.dart';
+export 'navbar.dart';
+export 'example_expansion_widget.dart';

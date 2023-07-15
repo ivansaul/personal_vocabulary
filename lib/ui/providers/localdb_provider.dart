@@ -12,8 +12,8 @@ class LoadDataNotifier extends StateNotifier<bool> {
   final LocaldbUsecase localdbUsecase;
   LoadDataNotifier({required this.localdbUsecase}) : super(false);
 
-  Future<void> loadData() async {
-    await localdbUsecase.loadData();
+  Future<void> loadData({required String name}) async {
+    await localdbUsecase.loadData(name: name);
     state = false;
   }
 }

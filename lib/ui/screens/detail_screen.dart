@@ -5,6 +5,8 @@ import 'package:flutter_template/ui/widgets/widgets.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../config/helpers/helpers.dart';
+
 class DetailScreen extends StatelessWidget {
   final Word word;
   const DetailScreen({super.key, required this.word});
@@ -15,7 +17,7 @@ class DetailScreen extends StatelessWidget {
       backgroundColor: AppTheme.primaryColorLightGray,
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(30),
+          padding: const EdgeInsets.only(right: 20, left: 20, top: 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -52,7 +54,7 @@ class DetailScreen extends StatelessWidget {
                                 "[${word.ipa.first}]",
                                 style: GoogleFonts.lexend(
                                   color: AppTheme.primaryColorGray,
-                                  fontSize: 13,
+                                  fontSize: 16,
                                 ),
                               ),
                             ],
@@ -68,12 +70,12 @@ class DetailScreen extends StatelessWidget {
                           ),
                         ],
                       ),
-                      const SizedBox(height: 15),
+                      const SizedBox(height: 12),
                       Text(
-                        word.sense.join(', '),
+                        StringHelper.listToString(word.sense),
                         style: GoogleFonts.lexend(
-                          color: AppTheme.primaryColorBlack,
-                          fontSize: 12,
+                          color: AppTheme.primaryColorBlack.withOpacity(0.9),
+                          fontSize: 14,
                         ),
                       ),
                       const SizedBox(height: 30),
@@ -86,19 +88,16 @@ class DetailScreen extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 10),
-                      Text(
-                        "Eating disorders are an example of the loss of the ability to be satisfied with the simplest pleasure of life.",
-                        style: GoogleFonts.lexend(
-                          color: AppTheme.primaryColorBlack.withOpacity(0.8),
-                          fontSize: 12,
-                        ),
-                      ),
-                      const SizedBox(height: 10),
-                      Text(
-                        "Eating disorders are an example of the loss of the ability to be satisfied with the simplest pleasure of life.",
-                        style: GoogleFonts.lexend(
-                          color: AppTheme.primaryColorBlack.withOpacity(0.8),
-                          fontSize: 12,
+                      Expanded(
+                        child: ListView.builder(
+                          itemCount: word.examples.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            final example = word.examples[index];
+                            return ExampleExpansionWidget(
+                              title: example.en!,
+                              subtitle: example.es!,
+                            );
+                          },
                         ),
                       ),
                     ],
@@ -122,8 +121,9 @@ class _AppbarView extends StatelessWidget {
       children: [
         CustomIconButton(
           icon: const Icon(
-            Icons.arrow_back_ios_new_rounded,
-            size: 18,
+            Icons.keyboard_arrow_left_rounded,
+            size: 35,
+            color: AppTheme.primaryColorDarkGray,
           ),
           onTap: () {
             context.pop();
@@ -131,7 +131,10 @@ class _AppbarView extends StatelessWidget {
         ),
         const Spacer(),
         CustomIconButton(
-          icon: const Icon(Icons.favorite_border_rounded),
+          icon: const Icon(
+            Icons.favorite_border_rounded,
+            color: AppTheme.primaryColorDarkGray,
+          ),
           onTap: () {},
         ),
       ],

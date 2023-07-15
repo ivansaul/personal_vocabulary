@@ -8,8 +8,8 @@ class LocaldbUsecaseImpl extends LocaldbUsecase {
   LocaldbUsecaseImpl(this.localdbRepository);
 
   @override
-  Future<void> loadData() {
-    return localdbRepository.loadData();
+  Future<void> loadData({required String name}) {
+    return localdbRepository.loadData(name: name);
   }
 
   @override

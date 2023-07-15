@@ -9,6 +9,8 @@ class CustomListTile extends StatelessWidget {
   final Color iconColor;
   final IconData leading;
   final IconData? trailing;
+  final void Function()? onTap;
+  final void Function()? onTapTrailing;
 
   const CustomListTile({
     super.key,
@@ -17,6 +19,8 @@ class CustomListTile extends StatelessWidget {
     this.iconColor = AppTheme.primaryColorDarkGray,
     required this.leading,
     this.trailing,
+    this.onTap,
+    this.onTapTrailing,
   });
 
   @override
@@ -26,14 +30,11 @@ class CustomListTile extends StatelessWidget {
       child: Material(
         color: Colors.transparent,
         child: InkWell(
-          onTap: () {},
+          onTap: onTap,
           child: Ink(
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
-                border: Border.all(
-                  color: AppTheme.primaryColorBlack.withOpacity(0.2),
-                  width: 2
-                ),
+                border: Border.all(color: AppTheme.primaryColorBlack.withOpacity(0.2), width: 2),
                 color: AppTheme.primaryColorWhite,
                 borderRadius: BorderRadius.circular(20),
                 boxShadow: const [
@@ -71,9 +72,12 @@ class CustomListTile extends StatelessWidget {
                   ),
                 ),
                 if (trailing != null)
-                  Icon(
-                    trailing,
-                    color: AppTheme.primaryColorDarkGray,
+                  IconButton(
+                    icon: Icon(
+                      trailing,
+                      color: AppTheme.primaryColorDarkGray,
+                    ),
+                    onPressed: onTapTrailing,
                   ),
               ],
             ),

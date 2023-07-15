@@ -25,10 +25,10 @@ class LocaldbRepositoryImpl extends LocaldbRepository {
   }
 
   @override
-  Future<void> loadData() async {
+  Future<void> loadData({required String name}) async {
     final Isar isar = await db;
 
-    const String path = 'assets/data/words_sample.json';
+    final String path = 'assets/data/$name.json';
     final String response = await rootBundle.loadString(path);
     final List<dynamic> data = jsonDecode(response);
 
@@ -49,7 +49,7 @@ class LocaldbRepositoryImpl extends LocaldbRepository {
             .toList()
             .cast<Example>(),
       );
-      // print(tmpWord.name);
+      print(tmpWord.name);
       await isar.writeTxn(() async {
         await isar.words.put(tmpWord);
       });
@@ -74,8 +74,8 @@ class LocaldbRepositoryImpl extends LocaldbRepository {
   @override
   Future<List<Word>> searchWord({required String query}) async {
     final Isar isar = await db;
-    // final words = await isar.words.filter().nameContains(query).findAll();
-    final words = await isar.words.filter().nameContains(query).sortByName().findAll();
+    final words =
+        await isar.words.filter().nameContains(query).or().senseElementContains(query).findAll();
     return words;
   }
 }

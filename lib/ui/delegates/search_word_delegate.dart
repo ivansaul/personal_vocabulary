@@ -1,3 +1,4 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_template/config/theme/app_theme.dart';
 import 'package:flutter_template/domain/entities/word.dart';
@@ -48,6 +49,8 @@ class SearchWordDelegate extends SearchDelegate<Word?> {
 
   @override
   Widget buildSuggestions(BuildContext context) {
+    bool isPlaying = false;
+
     return Container(
       color: AppTheme.primaryColorLightGray,
       child: FutureBuilder(
@@ -64,8 +67,23 @@ class SearchWordDelegate extends SearchDelegate<Word?> {
                 child: CustomListTile(
                   title: word.name,
                   subtitle: word.sense.join(', '),
-                  leading: Icons.abc,
+                  leading: Icons.history_sharp,
                   trailing: Icons.play_circle_fill_rounded,
+                  onTapTrailing: () async {
+                    if (!isPlaying) {
+                      // Verificar si la reproducción ya se ha realizado
+                      try {
+                        isPlaying = true;
+                        final player = AudioPlayer();
+                        await player.play(UrlSource(word.soundUS));
+                        // await player.dispose();
+                      } catch (e) {
+                        print(e);
+                      } finally {
+                        isPlaying = false;
+                      }
+                    }
+                  },
                 ),
               );
             },
