@@ -45,7 +45,8 @@ class WordCardWidget extends ConsumerWidget {
               ref.read(randomWordsProvider.notifier).getRandomWords(count: 1);
             },
           ),
-          Row(
+          Wrap(
+            crossAxisAlignment: WrapCrossAlignment.center,
             children: [
               Text(
                 word.name,
