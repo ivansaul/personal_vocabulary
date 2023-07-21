@@ -1,0 +1,1 @@
+class WrongWriteUserError implements Exception {}

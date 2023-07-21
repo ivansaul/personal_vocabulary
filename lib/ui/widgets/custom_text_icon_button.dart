@@ -36,6 +36,7 @@ class CustomTextIconButton extends StatelessWidget {
               padding: const EdgeInsets.only(right: 20, left: 20),
               child: Center(
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
                       text,

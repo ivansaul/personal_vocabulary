@@ -5,7 +5,10 @@ import 'package:flutter_template/config/theme/app_theme.dart';
 import 'package:flutter_template/ui/delegates/search_word_delegate.dart';
 import 'package:flutter_template/ui/providers/localdb_provider.dart';
 import 'package:flutter_template/ui/providers/localdb_repository_provider.dart';
+import 'package:flutter_template/ui/providers/preferences/preferences_provider.dart';
 import 'package:flutter_template/ui/screens/categories_screen.dart';
+import 'package:flutter_template/ui/screens/learn_screen.dart';
+import 'package:flutter_template/ui/screens/signup_screen.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../widgets/widgets.dart';
@@ -31,7 +34,8 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
     final scaffoldKey = GlobalKey<ScaffoldState>();
 
     final words = ref.watch(randomWordsProvider);
-    if (words.isEmpty) {
+    final userAsync = ref.watch(userGetProvider('user'));
+    if (words.isEmpty || !userAsync.hasValue) {
       return const Scaffold(
         body: Center(
           child: CircularProgressIndicator(),
@@ -52,7 +56,7 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
               _AppbarView(scaffoldKey: scaffoldKey),
               const SizedBox(height: 40),
               Text(
-                'Good evening, Saul!',
+                "Good evening, ${userAsync.value?.username ?? ''}",
                 style: AppTheme.titleExtaLargeTextStyle,
               ),
               const SizedBox(height: 10),
@@ -93,20 +97,36 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
                       },
                     ),
                     const SizedBox(height: 10),
-                    const CustomListTile(
+                    CustomListTile(
                       iconColor: Colors.pinkAccent,
                       leading: Icons.add_circle_outline_rounded,
                       trailing: Icons.keyboard_arrow_right_rounded,
                       title: 'Learn new words',
                       subtitle: 'Memorized today: 0 out of 10',
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const LearnScreen(),
+                          ),
+                        );
+                      },
                     ),
                     const SizedBox(height: 10),
-                    const CustomListTile(
+                    CustomListTile(
                       iconColor: Colors.green,
                       leading: Icons.history_rounded,
                       trailing: Icons.keyboard_arrow_right_rounded,
                       title: 'Review words',
                       subtitle: 'Words to review: 2',
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const SingupScreen(),
+                          ),
+                        );
+                      },
                     ),
                     const SizedBox(height: 10),
                     const CustomListTile(
